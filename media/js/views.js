@@ -27,21 +27,12 @@ window.ScotchView = Backbone.View.extend({
     el: '[data-id="tts"]',
     initialize: function() {
         var self = this;
-        self.dueDate = new Date();
-        self.dueDate.setHours(16);
-        self.dueDate.setMinutes(0);
-        setInterval(function() {
-            var timeLeft = self.dueDate - (new Date());
-            var time = "It's Time";
-            if (timeLeft > 0) {
-                var hours = Math.floor(timeLeft/3600000);
-                var minutes = Math.floor(timeLeft/60000) % 60;
-                if (minutes < 10) minutes = "0" + minutes;
-                var seconds = Math.floor(timeLeft/1000) % 60;
-                if (seconds < 10) seconds = "0" + seconds;
-                time = hours + ":" + minutes + ":" + seconds;
-            }
-            self.$('[data-field="time"]').html(time);
-        }, 1000);
+        self.dueDate = moment().day(5).hours(16).minutes(0);
+
+        var interval = 1000;
+
+        setInterval(function(){
+            self.$('[data-field="time"]').html(moment(self.dueDate).fromNow());
+        }, interval);
     }
 });
